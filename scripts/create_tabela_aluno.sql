@@ -1,0 +1,6 @@
+USE db_escola;
+CREATE TABLE tb_alunos(
+id_aluno INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+nome VARCHAR(50),
+endereco VARCHAR(100)
+)
