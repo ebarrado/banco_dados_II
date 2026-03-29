@@ -1,0 +1,3 @@
+USE db_ecommerce;
+#CONTAGEM TODOS DE PRODUTOS NA TABELA
+SELECT COUNT(*) FROM tb_produtos;
