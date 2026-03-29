@@ -38,6 +38,25 @@ ALTER TABLE clientes
 ADD telefone VARCHAR(20);
 ```
 
+### ✏️ Alterar nome de uma coluna
+```sql
+ALTER TABLE clientes
+CHANGE nome nome_completo VARCHAR(150);
+```
+
+### ✏️ Alterar apenas o tipo
+
+```sql
+ALTER TABLE clientes
+CHANGE telefone telefone VARCHAR(30);
+```
+
+### ✏️ Mais utilizado `MODIFY`
+
+```sql
+ALTER TABLE clientes
+MODIFY telefone VARCHAR(30);
+```
 
 ## 3.  INSERT (Inserir dados)
 
@@ -70,3 +89,21 @@ TRUNCATE TABLE clientes;
 * ✔ Apaga todos os dados
 * ✔ Mantém a estrutura
 
+## Exemplos:
+
+Na tabela produtos, eu quero pegar a coluna chamada categoria e renomear para categoria_produto, mantendo como texto de até 100 caracteres.
+
+```sql
+USE db_ecommerce;
+#ALTERAR NOME DA COLUAN COM TIPO
+ALTER TABLE tb_produtos
+CHANGE categoria categoria_produto VARCHAR(100);
+```
+
+```sql
+USE db_ecommerce;
+
+# MODEIFICAR TIPO COLUNA
+ALTER TABLE tb_produtos
+MODIFY categoria TEXT;
+```
