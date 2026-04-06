@@ -1,0 +1,3 @@
+USE db_loja_a;
+
+SELECT COUNT(*) AS TOTAL_CLIENTES FROM clientes;
