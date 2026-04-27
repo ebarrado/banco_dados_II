@@ -76,73 +76,6 @@ INSERT INTO notas (id_matricula, nota1, nota2, frequencia) VALUES
 (3, 7.0, 8.0, 85),
 (4, 4.0, 5.5, 60);
 ```
-
-1. DDL — Criação da estrutura do banco
-```sql
-CREATE DATABASE escola_tecnica;
-USE escola_tecnica;
-
-CREATE TABLE alunos (
-    id_aluno INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE,
-    data_nascimento DATE,
-    cidade VARCHAR(80)
-);
-
-CREATE TABLE cursos (
-    id_curso INT AUTO_INCREMENT PRIMARY KEY,
-    nome_curso VARCHAR(100) NOT NULL,
-    carga_horaria INT NOT NULL,
-    valor_mensalidade DECIMAL(10,2)
-);
-
-CREATE TABLE matriculas (
-    id_matricula INT AUTO_INCREMENT PRIMARY KEY,
-    id_aluno INT,
-    id_curso INT,
-    data_matricula DATE,
-    status_matricula VARCHAR(20),
-    FOREIGN KEY (id_aluno) REFERENCES alunos(id_aluno),
-    FOREIGN KEY (id_curso) REFERENCES cursos(id_curso)
-);
-
-CREATE TABLE notas (
-    id_nota INT AUTO_INCREMENT PRIMARY KEY,
-    id_matricula INT,
-    nota1 DECIMAL(4,2),
-    nota2 DECIMAL(4,2),
-    frequencia INT,
-    FOREIGN KEY (id_matricula) REFERENCES matriculas(id_matricula)
-);
-```
-2. DML — Inserção dos dados
-
-```sql
-INSERT INTO alunos (nome, email, data_nascimento, cidade) VALUES
-('Ana Souza', 'ana@email.com', '2007-03-15', 'Marília'),
-('Bruno Lima', 'bruno@email.com', '2006-08-22', 'Garça'),
-('Carla Mendes', 'carla@email.com', '2008-01-10', 'Marília'),
-('Diego Santos', 'diego@email.com', '2005-11-05', 'Bauru');
-
-INSERT INTO cursos (nome_curso, carga_horaria, valor_mensalidade) VALUES
-('Banco de Dados', 80, 250.00),
-('Programação Web', 100, 300.00),
-('Redes de Computadores', 60, 220.00);
-
-INSERT INTO matriculas (id_aluno, id_curso, data_matricula, status_matricula) VALUES
-(1, 1, '2026-04-01', 'Ativa'),
-(2, 1, '2026-04-02', 'Ativa'),
-(3, 2, '2026-04-03', 'Ativa'),
-(4, 3, '2026-04-04', 'Trancada');
-
-INSERT INTO notas (id_matricula, nota1, nota2, frequencia) VALUES
-(1, 8.5, 9.0, 90),
-(2, 5.0, 6.0, 75),
-(3, 7.0, 8.0, 85),
-(4, 4.0, 5.5, 60);
-```
-
 ### 3. DQL — Consultas para resolução de problemas
 
 #### Problema 1 — Listar alunos matriculados com seus cursos
@@ -156,6 +89,41 @@ FROM matriculas
 INNER JOIN alunos ON matriculas.id_aluno = alunos.id_aluno
 INNER JOIN cursos ON matriculas.id_curso = cursos.id_curso;
 ```
+
+## Função `ROUND()` do MySQL
+
+A função ROUND() arredonda um número para um número específico de casas decimais.
+
+```sql
+ROUND(number, decimals)
+`` 
+
+```sql 
+SELECT ROUND(345.156, 0);
+```
+
+#### Saída
+```text
+345
+```
+
+
+#### Problema 2 — Calcular a média dos alunos
+
+```sql
+SELECT 
+    alunos.nome,
+    cursos.nome_curso,
+    notas.nota1,
+    notas.nota2,
+    ROUND((notas.nota1 + notas.nota2) / 2, 2) AS media
+FROM notas
+INNER JOIN matriculas ON notas.id_matricula = matriculas.id_matricula
+INNER JOIN alunos ON matriculas.id_aluno = alunos.id_aluno
+INNER JOIN cursos ON matriculas.id_curso = cursos.id_curso;
+```
+
+
 
 #### Problema 3 — Mostrar situação final do aluno
 
@@ -177,6 +145,35 @@ INNER JOIN matriculas ON notas.id_matricula = matriculas.id_matricula
 INNER JOIN alunos ON matriculas.id_aluno = alunos.id_aluno
 INNER JOIN cursos ON matriculas.id_curso = cursos.id_curso;
 ```
+
+# Função CASE do MySQL
+
+Instrução `CASE`percorre as confições e retorna um valor quando a primeira condição é satisfeita (como uma isntrução IF-THEN-ELSE).
+
+Caso nenhuma condição seja verdadeira, retornará o valor contido na cláusula `ELSE`.
+
+Se não houver uma cláusula `ELSE` e nenhuma condição for verdadeira, retorna `NULL`.
+
+```sql
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END;
+```
+
+### Exemplo
+```
+SELECT CustomerName, City, Country
+FROM Customers
+ORDER BY
+(CASE
+    WHEN City IS NULL THEN Country
+    ELSE City
+END);
+```
+
 
 ### 4. Uso de funções em MySQL
 
@@ -236,7 +233,7 @@ FROM notas;
 3. Mostre quantos alunos existem em cada curso.
 4. Mostre o valor total previsto de mensalidades por curso.
 
-# Criação de Functins no MySQL
+# Criação de Functions no MySQL
 
 No MySQL, uma FUNCTION é um bloco de código que recebe valores, processa uma regra e retorna um resultado.
 
@@ -248,7 +245,7 @@ Ela é útil quando uma regra será usada várias vezes, por exemplo:
 * aplicar desconto;
 * formatar textos.
 
-### **Antes de criar functions&&
+### **Antes de criar functions**
 
 ```sql
 DELIMITER $$
