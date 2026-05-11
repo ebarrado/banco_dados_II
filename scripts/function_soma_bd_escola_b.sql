@@ -1,0 +1,9 @@
+use bd_escola_b;
+DELIMITER $$
+
+CREATE FUNCTION soma(n1 INT, n2 INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    RETURN n1 + n2;
+END$$

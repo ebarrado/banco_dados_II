@@ -1,0 +1,9 @@
+use bd_escola_b;
+DELIMITER $$
+
+CREATE FUNCTION calcular_media(n1 DECIMAL(4,2), n2 DECIMAL(4,2))
+RETURNS DECIMAL(4,2)
+DETERMINISTIC
+BEGIN
+    RETURN ROUND((n1 + n2) / 2, 2);
+END$$
