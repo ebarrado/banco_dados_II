@@ -69,13 +69,15 @@ Essa função deverá:
 # Código da FUNCTION
 
 ```sql
+USE wrpracti_northwind;
+
+DELIMITER $$
 CREATE FUNCTION fn_total_pedido(p_OrderID INT)
 RETURNS DECIMAL(10,2)
-DETERMINISTIC
+
+DETERMINISTIC 
 BEGIN
-
-    DECLARE v_Total DECIMAL(10,2);
-
+	DECLARE v_total DECIMAL(10,2);
     SELECT 
         SUM(
             (UnitPrice * Quantity) -
@@ -87,7 +89,9 @@ BEGIN
 
     RETURN v_Total;
 
-END;
+END $$
+
+DELIMITER ;
 ```
 
 ---
